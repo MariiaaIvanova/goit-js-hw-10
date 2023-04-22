@@ -39,7 +39,7 @@ body {
 }
 
 
-.country-item li {
+.country-item  {
   display: flex;
   align-items: center;
 
@@ -47,6 +47,7 @@ body {
 
 .country-item p {
   margin-left: 10px;
+  
 }
 
 h1,
