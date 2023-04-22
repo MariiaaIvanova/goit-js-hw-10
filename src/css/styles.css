@@ -14,7 +14,19 @@ body {
 
 #search-box {
   font: inherit;
-  padding: 8px;
+  padding: 5px;
   max-width: 320px;
-  margin-bottom: 16px;
+  
+  margin-right: 10px;
+}
+.box {
+display: flex;
+margin-bottom: 16px;
+}
+.btn-search {
+  padding: 5px 10px;
+  border-radius: 7px;
+  border: none;
+  background-color: cornflowerblue;
+  cursor: pointer;
 }
