@@ -14,19 +14,21 @@ body {
 
 #search-box {
   font: inherit;
-  padding: 5px;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 7px;
   max-width: 320px;
+  border-radius: 10px;
   
-  margin-right: 10px;
 }
-.box {
-display: flex;
-margin-bottom: 16px;
+
+.country-info_item {
+display: block;
+font-size: 22px;
+font-weight: 500;
+ 
 }
-.btn-search {
-  padding: 5px 10px;
-  border-radius: 7px;
-  border: none;
-  background-color: cornflowerblue;
-  cursor: pointer;
+
+.country-item {
+  margin-top: 20px;
 }

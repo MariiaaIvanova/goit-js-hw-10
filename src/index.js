@@ -10,99 +10,77 @@ const countryInfo = document.querySelector('.country-info');
 
 searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
+function onInput(event) {
+  let inputCountry = event.target.value.trim();
 
+  if (inputCountry) {
+    return fetchCountries(inputCountry)
+      .then(data => {
+        choseMarkup(data);
+      })
+      .catch(error => {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+      });
+  }
 
+  countryInfo.innerHTML = '';
+  countryList.innerHTML = '';
+}
 
-// import './css/styles.css';
+function choseMarkup(countryArray) {
+  if (countryArray.length === 1) {
+    countryList.innerHTML = '';
+    return markupCountry(countryArray);
+  }
+  if (countryArray.length >= 2 && countryArray.length <= 10) {
+    countryInfo.innerHTML = '';
+    return markupCountryItem(countryArray);
+  }
 
-// import debounce from 'lodash.debounce';
-// import { Notify } from 'notiflix';
+  return Notiflix.Notify.info(
+    'Too many matches found. Please enter a more specific name.'
+  );
+}
 
-// import { fetchCountries } from './fetchCountries.js';
+function markupCountryItem(data) {
+  const markup = data
+    .map(el => {
+      return `<li class="country-item">
+            <img src="${el.flags.svg}" alt="${el.name.official}" 
+            width="40" height="20" /> 
+            <p>${el.name.official}</p>
+            </li>`;
+    })
+    .join('');
 
-// const DEBOUNCE_DELAY = 300;
+  countryList.innerHTML = markup;
+}
 
-// const searchRef = document.querySelector('#search-box');
-// const countryListRef = document.querySelector('.country-list');
-// const countryInfoRef = document.querySelector('.country-info');
+function markupCountry(data) {
+  const markup = data
+    .map(el => {
+      return `<h1>
+       <img src="${el.flags.svg}" alt="${el.name.official}" 
+       width="60" height="40" /> 
+        ${el.name.official}
+      </h1>
+      <ul class="country-info_list">
+        <li class="country-info_item">
+          <h2>Capital:</h2>
+          <p>${el.capital}</p>
+        </li>
+        <li class="country-info_item">
+          <h2>Population:</h2>
+          <p>${el.population}</p>
+        </li>
+        <li class="country-info_item">
+          <h2>Languages:</h2>
+          <p>${Object.values(el.languages).join(', ')}</p>
+        </li>
+      </ul>`;
+    })
+    .join('');
 
-// searchRef.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
+  countryInfo.innerHTML = markup;
+}
 
-// function onInput(e) {
-//   let inputCountry = e.target.value.trim();
-
-//   if (inputCountry) {
-//     return fetchCountries(inputCountry)
-//       .then(data => {
-//         choseMarkup(data);
-//       })
-//       .catch(error => {
-//         Notify.failure('Oops, there is no country with that name');
-//       });
-//   }
-
-//   countryInfoRef.innerHTML = '';
-//   countryListRef.innerHTML = '';
-// }
-
-// countryListRef.style.listStyle = 'none';
-// countryListRef.style.margin = '0';
-// countryListRef.style.padding = '8px';
-
-// function choseMarkup(countryArray) {
-//   if (countryArray.length === 1) {
-//     countryListRef.innerHTML = '';
-//     return markupCountry(countryArray);
-//   }
-//   if (countryArray.length >= 2 && countryArray.length <= 10) {
-//     countryInfoRef.innerHTML = '';
-//     return markupCountryItem(countryArray);
-//   }
-
-//   return Notify.info(
-//     'Too many matches found. Please enter a more specific name.'
-//   );
-// }
-
-// function markupCountryItem(data) {
-//   const markup = data
-//     .map(el => {
-//       return `<li class="country-item">
-//             <img src="${el.flags.svg}" alt="${el.name.official}" width="40" height="20" /> 
-//             <p>${el.name.official}</p>
-//             </li>`;
-//     })
-//     .join('');
-
-//   countryListRef.innerHTML = markup;
-// }
-
-// function markupCountry(data) {
-//   const markup = data
-//     .map(el => {
-//       return `<h1>
-//        <img src="${el.flags.svg}" alt="${
-//         el.name.official
-//       }" width="40" height="20" /> 
-            
-//         ${el.name.official}
-//       </h1>
-//       <ul class="country-info_list">
-//         <li class="country-info_item">
-//           <h2>Capital:</h2>
-//           <p>${el.capital}</p>
-//         </li>
-//         <li class="country-info_item">
-//           <h2>Population:</h2>
-//           <p>${el.population}</p>
-//         </li>
-//         <li class="country-info_item">
-//           <h2>Languages:</h2>
-//           <p>${Object.values(el.languages).join(', ')}</p>
-//         </li>
-//       </ul>`;
-//     })
-//     .join('');
-
-//   countryInfoRef.innerHTML = markup;
-// }
